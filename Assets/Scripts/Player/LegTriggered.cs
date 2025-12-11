@@ -5,7 +5,6 @@ public class LegTriggered : MonoBehaviour
 {
     enum BodyPart { Left, Right, Debug };
     [SerializeField] private BodyPart bodyPart;
-    [SerializeField] private MovementController movementController;
     [SerializeField] private PlayerController playerController;
 
     private void OnTriggerEnter(Collider other)
@@ -17,12 +16,10 @@ public class LegTriggered : MonoBehaviour
 
         if (bodyPart == BodyPart.Left)
         {
-            movementController.leftLegObstacleCounter += 1;
             playerController.leftFootController.legObstacleCounter += 1;
         }
         else if (bodyPart == BodyPart.Right)
         {
-            movementController.rightLegObstacleCounter += 1;
             playerController.rightFootController.legObstacleCounter += 1;
         }
 
@@ -57,15 +54,11 @@ public class LegTriggered : MonoBehaviour
 
         if (bodyPart == BodyPart.Left)
         {
-            movementController.obstacleOnLeftLegContactPoint = contactPoint;
-            movementController.closestLFootColPointToObstacle = closestFootColPointToObstacle;
             playerController.leftFootController.obstacleOnLegContactPoint = contactPoint;
             playerController.leftFootController.closestFootColPointToObstacle = closestFootColPointToObstacle;
         }
         else if (bodyPart == BodyPart.Right)
         {
-            movementController.obstacleOnRightLegContactPoint = contactPoint;
-            movementController.closestRFootColPointToObstacle = closestFootColPointToObstacle;
             playerController.rightFootController.obstacleOnLegContactPoint = contactPoint;
             playerController.rightFootController.closestFootColPointToObstacle = closestFootColPointToObstacle;
         }
@@ -79,12 +72,10 @@ public class LegTriggered : MonoBehaviour
         }
         if (bodyPart == BodyPart.Left)
         {
-            movementController.leftLegObstacleCounter -= 1;
             playerController.leftFootController.legObstacleCounter -= 1;
         }
         else if (bodyPart == BodyPart.Right)
         {
-            movementController.rightLegObstacleCounter -= 1;
             playerController.rightFootController.legObstacleCounter -= 1;
         }
     }
