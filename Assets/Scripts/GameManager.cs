@@ -4,7 +4,7 @@ using UnityEngine.Timeline;
 public class GameManager : MonoBehaviour
 {
     public static GameManager singleton;
-    [SerializeField] private MovementController PlayerController;
+    [SerializeField] private PlayerController PlayerController;
     [SerializeField] private Eye_Behaviour EyeController;
     [SerializeField] private GameObject GameOverPanel;
     [SerializeField] private GameObject WinPanel;

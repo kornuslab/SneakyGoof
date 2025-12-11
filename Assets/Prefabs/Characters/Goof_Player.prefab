@@ -52,8 +52,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.1948484, y: 5.4369726, z: 1.872822}
-  m_Center: {x: 0.17964129, y: -1.6422257, z: 0.04819501}
+  m_Size: {x: 1.1948484, y: 5.721804, z: 1.872822}
+  m_Center: {x: 0.1796413, y: -1.4998107, z: 0.04819501}
 --- !u!114 &7297382910452845723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,7 +67,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bodyPart: 0
-  movementController: {fileID: 8735563591824565839}
+  movementController: {fileID: 0}
+  playerController: {fileID: 1461337709820981992}
 --- !u!1 &1361942349087212267
 GameObject:
   m_ObjectHideFlags: 0
@@ -120,8 +121,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.0622717, y: 5.345373, z: 1.9928312}
-  m_Center: {x: -0.15756464, y: 1.6390227, z: -0.052700132}
+  m_Size: {x: 1.0622717, y: 5.67176, z: 1.9928312}
+  m_Center: {x: -0.15756463, y: 1.4758306, z: -0.052700106}
 --- !u!114 &5483143452689622993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,7 +136,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bodyPart: 1
-  movementController: {fileID: 8735563591824565839}
+  movementController: {fileID: 0}
+  playerController: {fileID: 1461337709820981992}
 --- !u!1 &2722836882426539964
 GameObject:
   m_ObjectHideFlags: 0
@@ -613,7 +615,7 @@ PrefabInstance:
       addedObject: {fileID: 7204052592181774189}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 03b64d556d7e24b41a075eb0ad62ba5e, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8735563591824565839}
+      addedObject: {fileID: 1461337709820981992}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 03b64d556d7e24b41a075eb0ad62ba5e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7110869988680752236}
@@ -646,6 +648,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -2583844965307328835, guid: 03b64d556d7e24b41a075eb0ad62ba5e, type: 3}
   m_PrefabInstance: {fileID: 6457691638788599855}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1480912468099662478 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5553807366572880545, guid: 03b64d556d7e24b41a075eb0ad62ba5e, type: 3}
+  m_PrefabInstance: {fileID: 6457691638788599855}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1909257558122716009 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -4332075852366648506, guid: 03b64d556d7e24b41a075eb0ad62ba5e, type: 3}
@@ -658,13 +665,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1909257558122716009}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: deda9e8d3065e3141b0543decd8f27f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   bodyPart: 1
-  movementController: {fileID: 8735563591824565839}
+  movementController: {fileID: 0}
+  playerController: {fileID: 1461337709820981992}
 --- !u!65 &5997173196816686244
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -724,16 +732,22 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3235736709847873271}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: deda9e8d3065e3141b0543decd8f27f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   bodyPart: 0
-  movementController: {fileID: 8735563591824565839}
+  movementController: {fileID: 0}
+  playerController: {fileID: 1461337709820981992}
 --- !u!4 &4012805119601673740 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7939297117883545123, guid: 03b64d556d7e24b41a075eb0ad62ba5e, type: 3}
+  m_PrefabInstance: {fileID: 6457691638788599855}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5962200502437616415 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8420700440895542480, guid: 03b64d556d7e24b41a075eb0ad62ba5e, type: 3}
   m_PrefabInstance: {fileID: 6457691638788599855}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &6151703258039324030 stripped
@@ -779,7 +793,7 @@ MonoBehaviour:
   - m_Rig: {fileID: 2042640479590525403}
     m_Active: 1
   m_Effectors: []
---- !u!114 &8735563591824565839
+--- !u!114 &1461337709820981992
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -788,7 +802,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6151703258039324030}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 557866433ccd3bf49a3dcb82709a4194, type: 3}
+  m_Script: {fileID: 11500000, guid: ae13025435025d748b7f6d65277aa4cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   LeftLegIKTarget: {fileID: 1131904180127144932}
@@ -869,18 +883,17 @@ MonoBehaviour:
   rotationSpeed: 180
   YBodyMoveFactor: 0.5
   bodyLerpBtwLegs: 0.2
-  obstacleOnLeftLegContactPoint: {x: 0, y: 0, z: 0}
-  obstacleOnRightLegContactPoint: {x: 0, y: 0, z: 0}
   obstacleMask:
     serializedVersion: 2
     m_Bits: 72
   groundMask:
     serializedVersion: 2
     m_Bits: 128
-  leftLegObstacleCounter: 0
-  rightLegObstacleCounter: 0
   measurementDistance: 20
   debugSpeedMeasurement: 1
+  leftFootTransform: {fileID: 5962200502437616415}
+  rightFootTransform: {fileID: 1480912468099662478}
+  maxAllowedFootToIKTargetDistance: 0.5
 --- !u!114 &7110869988680752236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -939,7 +952,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
