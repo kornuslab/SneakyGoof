@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class Eye_Behaviour : MonoBehaviour
 {
     [SerializeField] private bool debugMode;
-    [SerializeField] private LayerMask obstacleLayer = ~0;
     [SerializeField] private Transform player;
     [SerializeField] private Transform pupil;
     [SerializeField] private GameObject eyeOpenVisual;
@@ -113,7 +112,7 @@ public class Eye_Behaviour : MonoBehaviour
         float angleToPlayer = Vector3.Angle(pupil.transform.forward, directionToPlayer);
         if (angleToPlayer <= detectionAngleRange / 2f) // If player is within detection angle
         {
-            if (Physics.Raycast(transform.position + directionToPlayer, directionToPlayer, out RaycastHit hit, Mathf.Infinity, obstacleLayer)) // Raycast to check for line of sight
+            if (Physics.Raycast(transform.position + directionToPlayer, directionToPlayer, out RaycastHit hit, Mathf.Infinity)) // Raycast to check for line of sight
             {
                 Debug.DrawRay(transform.position + directionToPlayer, directionToPlayer * hit.distance, Color.blue);
                 if (hit.transform.CompareTag("Player")) // If the raycast hits the player

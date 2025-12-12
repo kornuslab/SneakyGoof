@@ -295,7 +295,7 @@ public class FootController
         if (legOnObstacle)
         {
             signedObsForwardDirFromTranform = Vector3.Dot(obstacleOnLegContactPoint - playerTransform.position, playerTransform.forward);
-            signedObsForwardDirFromTarget = Vector3.Dot(obstacleOnLegContactPoint - (footState.IKTarget.position + playerTransform.forward * 0.1f), playerTransform.forward);
+            signedObsForwardDirFromTarget = Vector3.Dot(obstacleOnLegContactPoint - footState.IKTarget.position, playerTransform.forward);
             signedObsRightDir = Vector3.Dot(obstacleOnLegContactPoint - footState.IKTarget.position, playerTransform.right);
         }else
         {

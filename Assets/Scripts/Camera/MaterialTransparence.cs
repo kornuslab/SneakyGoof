@@ -6,7 +6,6 @@ public class MaterialTransparence : MonoBehaviour
 {
     [SerializeField] private GameObject player;
     [SerializeField, Range(0f, 1f)] private float transparence = 0.5f;
-    [SerializeField] private LayerMask obstacleLayer = ~0;
     [SerializeField] private bool debugLogs = false;
 
     // Renderers actuellement rendus transparents
@@ -24,7 +23,7 @@ public class MaterialTransparence : MonoBehaviour
         if (player == null) return;
 
         Vector3 dirToPlayer = player.transform.position - transform.position;
-        RaycastHit[] hits = Physics.RaycastAll(transform.position, dirToPlayer.normalized, dirToPlayer.magnitude, obstacleLayer);
+        RaycastHit[] hits = Physics.RaycastAll(transform.position, dirToPlayer.normalized, dirToPlayer.magnitude);
 
         newObstacles.Clear();
 
