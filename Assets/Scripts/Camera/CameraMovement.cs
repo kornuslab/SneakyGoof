@@ -1,5 +1,6 @@
 using System;
 using System.Data.SqlTypes;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,13 +13,11 @@ public class CameraMovement : MonoBehaviour
     private Quaternion targetRotation;
     private float distanceBehindPlayer;
     [SerializeField] private float speedLerp = 5f;
-    [SerializeField] private float limitDist = 3;
-
     // Section Camera moves by player
     private PlayerInputActions input;
     private Vector2 inputVector;
     private Vector3 inputDir;
-    private float deadzone = 0.1f;
+    private float deadzone = 0.2f;
     private bool eyeCameraDir = true;
 
     void Start()
@@ -32,6 +31,18 @@ public class CameraMovement : MonoBehaviour
     }
     void Update()
     {
+        if (inputVector.sqrMagnitude > deadzone * deadzone)
+        {
+            inputDir = new Vector3(inputVector.x, 0, inputVector.y);
+        }
+        else
+        {
+            inputDir = Vector3.zero;
+        }
+    }
+
+    void LateUpdate()
+    {
         Vector3 direction;
         if (eyeCameraDir)
         {
@@ -42,16 +53,8 @@ public class CameraMovement : MonoBehaviour
             direction = player.forward;
         }
 
-        if (inputVector.sqrMagnitude > deadzone * deadzone)
-        {
-            inputDir = new Vector3(inputVector.x, 0, inputVector.y);
-        }
-        else
-        {
-            inputDir = Vector3.zero;
-        }
-        
-        float angleY = Mathf.Atan2(inputDir.x, inputDir.z) * Mathf.Rad2Deg;
+        // float angleY = Mathf.Atan2(inputDir.x, inputDir.z) * Mathf.Rad2Deg;
+        float angleY = Mathf.Lerp(-90, 90, (inputDir.x + 1)/2);
 
         Quaternion horizontalRot = Quaternion.Euler(0f, angleY, 0f);
         direction = horizontalRot * direction;
@@ -59,8 +62,8 @@ public class CameraMovement : MonoBehaviour
         Vector3 targetPosition = player.position - direction * distanceBehindPlayer;
 
         targetPosition.y = transform.position.y;
-        
-        if (inputVector.sqrMagnitude > deadzone * deadzone)
+
+        if (inputDir.sqrMagnitude > deadzone * deadzone)
         {
             Vector3 lookDirection = player.position - targetPosition;
             lookDirection.y = direction.y;
@@ -70,7 +73,7 @@ public class CameraMovement : MonoBehaviour
         {
             targetRotation = Quaternion.LookRotation(direction);
         }
-        
+
         MoveAroundPlayer(targetPosition);
     }
 
@@ -86,7 +89,7 @@ public class CameraMovement : MonoBehaviour
         Vector3 targetDirFlat = new Vector3(targetDir.x, 0, targetDir.z);
         float angle = Vector3.SignedAngle(currentDirFlat, targetDirFlat, Vector3.up);
       
-        if (Mathf.Abs(angle) > 0.5f && inputVector.sqrMagnitude > deadzone * deadzone)
+        if (Mathf.Abs(angle) > 2 && inputDir.sqrMagnitude > deadzone * deadzone)
         {
             float deltaAngle = Mathf.Clamp(angle, -orbitSpeed * Time.deltaTime, orbitSpeed * Time.deltaTime);
 

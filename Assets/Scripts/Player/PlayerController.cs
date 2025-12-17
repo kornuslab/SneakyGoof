@@ -23,7 +23,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float maxStepSpeed = 1;
     [SerializeField] private float minStepSpeed = 0.1f;
     [SerializeField] private float rotationSpeed = 180f; // deg/s, configuré dans l'inspector
-    [SerializeField] private float YBodyMoveFactor = 1;
     [SerializeField] private float bodyLerpBtwLegs = 0.3f;
     private float initialYBodyPos;
     public LayerMask obstacleMask;
