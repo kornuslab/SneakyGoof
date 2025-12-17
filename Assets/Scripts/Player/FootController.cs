@@ -220,8 +220,13 @@ public class FootController
             {
                 footState.IKTargetOrigin = hit.point + Vector3.up * 0.1f;
             }
+            
+            if (!footState.onGround)
+            {
+                footState.movingToOrigin = true;
+            }
 
-            footState.movingToOrigin = true;
+            
         }
         GetBackInput(direction, justPressed, pressed, justReleased, nextPressed);
     }
