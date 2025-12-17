@@ -23,7 +23,7 @@ public class CameraMovement : MonoBehaviour
 
     void Start()
     {
-        input = player.GetComponent<PlayerController>().input;
+        input = player.GetComponent<PInputController>().input;
         input.Player.CameraMove.performed += ctx => inputVector = ctx.ReadValue<Vector2>();
         input.Player.CameraMove.canceled += ctx => inputVector = Vector2.zero;
         input.Player.CameraMode.performed += ctx => eyeCameraDir = !eyeCameraDir;

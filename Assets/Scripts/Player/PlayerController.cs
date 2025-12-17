@@ -9,7 +9,6 @@ using UnityEngine.UIElements;
 [RequireComponent(typeof(NoiseEmitter))]
 public class PlayerController : MonoBehaviour
 {
-    public PlayerInputActions input;
     [SerializeField] private Transform LeftLegIKTarget;
     [SerializeField] private Transform RightLegIKTarget;
     private float bodyYTarget = 0;
@@ -35,10 +34,10 @@ public class PlayerController : MonoBehaviour
     // Pied Droit
     public FootController rightFootController;
     // Rotation
-    private bool rightRotationInput = false;
-    private bool leftRotationInput = false;
+    public bool rightRotationInput {get; private set;} = false;
+    public bool leftRotationInput {get; private set;} = false;
     // Keyboard modifier
-    private bool keyboardModifier = false;
+    public bool keyboardModifier {get; private set;} = false;
 
     private NoiseEmitter noiseEmitter;
 
@@ -56,7 +55,6 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
-        input = new PlayerInputActions();
         noiseEmitter = GetComponent<NoiseEmitter>();
         leftFootController = new FootController(transform, LeftLegIKTarget, speedStepCurve, heightFootCurve, noiseEmitter, obstacleMask, groundMask,
                                             maxStepLength, maxStepHeight, maxStepSpeed, toleranceDistanceForStep, speedFootToGround);
@@ -78,7 +76,27 @@ public class PlayerController : MonoBehaviour
         measurementStartTime = Time.time;
     }
 
-    private void InputsStart(Foot foot, bool isForward)
+    public void SetKeyboardModifier(bool value)
+    {
+        keyboardModifier = value;
+    }
+
+    /// <summary>
+    /// Set Left Rotation Input
+    /// </summary>
+    public void SetLRI(bool value)
+    {
+        leftRotationInput = value;
+    }
+    /// <summary>
+    /// Set Right Rotation Input
+    /// </summary>
+    public void SetRRI(bool value)
+    {
+        rightRotationInput = value;
+    }
+
+    public void InputsStart(Foot foot, bool isForward)
     {
         // BackLeft
         if (foot == Foot.Left && !isForward)
@@ -111,7 +129,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void InputsCancel(Foot foot, bool isForward)
+    public void InputsCancel(Foot foot, bool isForward)
     {
         // BackLeft
         if (foot == Foot.Left && !isForward)
@@ -141,89 +159,6 @@ public class PlayerController : MonoBehaviour
            rightFootController.justForwardReleased = true;
            rightFootController.globalPressed = false;
         }
-    }
-
-    void OnEnable()
-    {
-        input.Player.Enable();
-
-        // Keyboard modifier
-        input.Player.KeyboardModifier.started += ctx => keyboardModifier = true;
-        input.Player.KeyboardModifier.canceled += ctx => keyboardModifier = false;
-
-        // Gauche
-        input.Player.LeftStep.started += ctx =>
-        {
-            if (keyboardModifier)
-            {
-                InputsStart(Foot.Left, false);
-            }
-            else
-            {
-                InputsStart(Foot.Left, true);
-            }
-        };
-        input.Player.LeftStep.canceled += ctx =>
-        {
-            if (leftFootController.backPressed && !leftFootController.forwardPressed)
-            {
-                InputsCancel(Foot.Left, false);
-            }
-            else
-            {
-                InputsCancel(Foot.Left, true);
-            }
-        };  
-        input.Player.LeftStepBackward.performed += ctx =>
-        {
-            InputsStart(Foot.Left, false);
-        };
-        input.Player.LeftStepBackward.canceled += ctx =>
-        {
-            InputsCancel(Foot.Left, false);
-        };
-
-        // Droite
-        input.Player.RightStep.started += ctx =>
-        {
-            if (keyboardModifier)
-            {
-                InputsStart(Foot.Right, false);
-            }
-            else
-            {
-                InputsStart(Foot.Right, true);
-            }
-        };
-        input.Player.RightStep.canceled += ctx =>
-        {
-            if (rightFootController.backPressed && !rightFootController.forwardPressed)
-            {
-                InputsCancel(Foot.Right, false);
-            }
-            else
-            {
-                InputsCancel(Foot.Right, true);
-            }
-        };
-        input.Player.RightStepBackward.performed += ctx =>
-        {
-            InputsStart(Foot.Right, false);
-        };
-        input.Player.RightStepBackward.canceled += ctx =>
-        {
-            InputsCancel(Foot.Right, false);
-        };
-
-        input.Player.Right.started += ctx => rightRotationInput = true;
-        input.Player.Right.canceled += ctx => rightRotationInput = false; 
-        input.Player.Left.started += ctx => leftRotationInput = true;
-        input.Player.Left.canceled += ctx => leftRotationInput = false;
-    }
-
-    void OnDisable()
-    {
-        input.Player.Disable();
     }
 
     void Update()

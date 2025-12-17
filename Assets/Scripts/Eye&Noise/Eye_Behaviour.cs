@@ -14,6 +14,7 @@ public class Eye_Behaviour : MonoBehaviour
     [SerializeField] private float timeBetweenDirectionChange = 5f;
     [SerializeField] private Vector2 eyeOpenDurationRange = new Vector2(8, 12);
     [SerializeField] private Vector2 eyeClosedDurationRange = new Vector2(5, 10);
+    [SerializeField] private LayerMask obstacleForVisionLayers;
     private Vector3 targetDirection;
     private Quaternion targetRotation;
     private Vector3 lastKnownPlayerPosition;
@@ -108,11 +109,11 @@ public class Eye_Behaviour : MonoBehaviour
     }
     private void PlayerDetection()
     {
-        Vector3 directionToPlayer = (player.position - transform.position).normalized;
+        Vector3 directionToPlayer = (player.position + 0.5f * Vector3.up - transform.position).normalized;
         float angleToPlayer = Vector3.Angle(pupil.transform.forward, directionToPlayer);
         if (angleToPlayer <= detectionAngleRange / 2f) // If player is within detection angle
         {
-            if (Physics.Raycast(transform.position + directionToPlayer, directionToPlayer, out RaycastHit hit, Mathf.Infinity)) // Raycast to check for line of sight
+            if (Physics.Raycast(transform.position + directionToPlayer, directionToPlayer, out RaycastHit hit, Mathf.Infinity, obstacleForVisionLayers)) // Raycast to check for line of sight
             {
                 Debug.DrawRay(transform.position + directionToPlayer, directionToPlayer * hit.distance, Color.blue);
                 if (hit.transform.CompareTag("Player")) // If the raycast hits the player
