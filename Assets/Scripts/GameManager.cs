@@ -13,7 +13,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject WinPanel;
     [SerializeField] private GameObject PausePanel;
     [SerializeField] private float WinDistance;
-    private bool alreadyWinned = false;
+    [Header("SoundDatas")]
+    [SerializeField] private SoundData winSoundData;
+    [SerializeField] private SoundData loseSoundData;
+    private bool alreadyWon = false;
+    private bool alreadyLost;
 
     public bool pause { get; private set; }
 
@@ -28,14 +32,15 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
  
-        alreadyWinned = false;
+        alreadyWon = false;
     }
 
     void Update()
     {
-        if (WinConditions() && !alreadyWinned)
+        if (WinConditions() && !alreadyWon)
         {
-            alreadyWinned = true;
+            alreadyWon = true;
+            AudioManager.Instance.Play(winSoundData, SoundType.UI);
             OnWin();
         }
     }
@@ -64,6 +69,11 @@ public class GameManager : MonoBehaviour
 
     public void OnLose()
     {
+        if (!alreadyLost)
+        {
+            AudioManager.Instance.Play(loseSoundData, SoundType.UI);
+        }
+        alreadyLost = true;
         PauseTheGame(true);
         GameOverPanel.SetActive(true);
         SetSelectedGameObject(GameOverPanel.transform.GetChild(0).GetChild(0).gameObject);
@@ -79,5 +89,11 @@ public class GameManager : MonoBehaviour
     public void SetSelectedGameObject(GameObject gameObject)
     {
         EventSystem.current.SetSelectedGameObject(gameObject);
+    }
+
+    public void ResetParams()
+    {
+        alreadyLost = false;
+        alreadyWon = false;
     }
 }

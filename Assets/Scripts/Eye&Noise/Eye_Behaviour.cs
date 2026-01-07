@@ -46,6 +46,9 @@ public class Eye_Behaviour : MonoBehaviour
     [SerializeField] private Color firstStageColor;
     [SerializeField] private Color secondStageColor;
     [SerializeField] private Color thirdStageColor;
+    [Header("SoundDatas")]
+    [SerializeField] private SoundData eyeSoundData;
+    [SerializeField] private SoundData noiseThreshData;
     void OnNoiseHeard(Vector3 sourcePosition, float intensity)
     {
         currentNoiseSpeedDecrease = noiseSpeedDecrease;
@@ -58,6 +61,10 @@ public class Eye_Behaviour : MonoBehaviour
         } 
         else if (current_noiseLevel < noiseSecondThreshold)
         {
+            if (firstStage) // Happens when it passes from first stage to second stage.
+            {
+                AudioManager.Instance.Play(noiseThreshData, SoundType.UI);
+            }
             firstStage = false;
             secondStage = true;
             // Debug.Log("Eye heard noise at position: " + sourcePosition + " with intensity: " + intensity);
@@ -104,6 +111,7 @@ public class Eye_Behaviour : MonoBehaviour
         
         if (eyeOpened)
         {
+            EyeLightSoundVolumeAdjust(0.1f, 1f);
             PlayerDetection();
         }
     }
@@ -118,6 +126,7 @@ public class Eye_Behaviour : MonoBehaviour
                 Debug.DrawRay(transform.position + directionToPlayer, directionToPlayer * hit.distance, Color.blue);
                 if (hit.transform.CompareTag("Player")) // If the raycast hits the player
                 {
+                    Debug.Log("au bonne endroit");
                     PlayerLose();
                 }
             }
@@ -196,13 +205,29 @@ public class Eye_Behaviour : MonoBehaviour
     }
     private void OpenTheEye()
     {
+        if (!eyeOpened) // Happens on the frame when the eye opens.
+        {
+            AudioManager.Instance.Play(eyeSoundData, SoundType.Eye);
+        }
         eyeOpened = true;
         timerEyeOpened = UnityEngine.Random.Range(eyeOpenDurationRange.x, eyeOpenDurationRange.y);
         eyeOpenVisual.SetActive(true);
     }
 
+    private void EyeLightSoundVolumeAdjust(float volumeMin, float volumeMax)
+    {
+        float angleBetween = Vector3.Angle(transform.forward, (player.position - transform.position).normalized);
+        float new_volume = (1 + Mathf.Cos(Mathf.Deg2Rad * angleBetween)) / 2 * (volumeMax - volumeMin) + volumeMin;
+
+        AudioManager.Instance.SetVolume(new_volume, SoundType.Eye);   
+    }
+
     private void CloseTheEye()
     {
+        if (eyeOpened) // Happens on the frame when the eye closes.
+        {
+            AudioManager.Instance.Stop(SoundType.Eye);
+        }
         eyeOpened = false;
         timerEyeClosed = UnityEngine.Random.Range(eyeClosedDurationRange.x, eyeClosedDurationRange.y);
         eyeOpenVisual.SetActive(false);
