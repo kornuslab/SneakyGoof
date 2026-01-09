@@ -8,7 +8,6 @@ public class Menu : MonoBehaviour
     private void Start()
     {
         EventSystem.current.SetSelectedGameObject(transform.GetChild(0).GetChild(0).gameObject);
-        Debug.Log(transform.GetChild(0).GetChild(0).gameObject);
     }
     public void OnButtonPlay()
     {

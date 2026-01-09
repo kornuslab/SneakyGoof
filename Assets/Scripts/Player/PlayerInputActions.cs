@@ -116,6 +116,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PassDialogue"",
+                    ""type"": ""Button"",
+                    ""id"": ""aa8bb4c3-d65f-4337-a34e-512bc2a86552"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -314,6 +323,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7f64971b-75b5-45db-94f6-2cbdd6232ae9"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PassDialogue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a8cc67e5-fc80-41c4-8955-1f0cd35db9ce"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PassDialogue"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -933,6 +964,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_CameraMode = m_Player.FindAction("CameraMode", throwIfNotFound: true);
         m_Player_KeyboardModifier = m_Player.FindAction("KeyboardModifier", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+        m_Player_PassDialogue = m_Player.FindAction("PassDialogue", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1022,6 +1054,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_CameraMode;
     private readonly InputAction m_Player_KeyboardModifier;
     private readonly InputAction m_Player_Pause;
+    private readonly InputAction m_Player_PassDialogue;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -1036,6 +1069,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @CameraMode => m_Wrapper.m_Player_CameraMode;
         public InputAction @KeyboardModifier => m_Wrapper.m_Player_KeyboardModifier;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
+        public InputAction @PassDialogue => m_Wrapper.m_Player_PassDialogue;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1075,6 +1109,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
+            @PassDialogue.started += instance.OnPassDialogue;
+            @PassDialogue.performed += instance.OnPassDialogue;
+            @PassDialogue.canceled += instance.OnPassDialogue;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1109,6 +1146,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
+            @PassDialogue.started -= instance.OnPassDialogue;
+            @PassDialogue.performed -= instance.OnPassDialogue;
+            @PassDialogue.canceled -= instance.OnPassDialogue;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1301,6 +1341,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnCameraMode(InputAction.CallbackContext context);
         void OnKeyboardModifier(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnPassDialogue(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

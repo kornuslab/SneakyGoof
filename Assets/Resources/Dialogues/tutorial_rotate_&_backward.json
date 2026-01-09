@@ -1,0 +1,46 @@
+{
+  "dialogueId": "tutorial_rotate_&_backward",
+  "lines": [
+    {
+      "speaker": "Camarade",
+      "text": [
+        "Bravo! First step complete!",
+        "Now, let's learn how to rotate."
+      ]
+    },
+    {
+      "speaker": "Camarade",
+      "text": [
+        "Use your left joystick or WASD keys to rotate.",
+        "You cannot turn when your feet are on ground. You need to move one leg to turn around the other foot.",
+        "Give it a try now!"
+      ],
+      "waitForAction": 4
+    },
+    {
+      "speaker": "Camarade",
+      "text": [
+        "Try to avoid these obstacles by rotating around them!",
+        "You have 30 seconds to reach the end of this path once you passed the start line. Good luck!"
+      ]
+    },
+    {
+      "speaker": "Camarade",
+      "text": [
+        "Great! Now that you can rotate, let's learn how to move backward.",
+        "To move backward: ",
+        "On keyboard, press ctrl + left/right arrow keys. ",
+        "On gamepad, press the triggers instead of the buttons.",
+        "Try moving backward now!"
+      ],
+      "waitForAction": 3
+    },
+    {
+      "speaker": "Camarade",
+      "text": [
+        "Well done! You've mastered rotating and moving backward.",
+        "Let's pass to the next lesson!"
+      ]
+    }
+  ]
+}

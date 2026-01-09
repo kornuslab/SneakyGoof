@@ -1,0 +1,42 @@
+{
+  "dialogueId": "tutorial_move_forward",
+  "lines": [
+    {
+      "speaker": "Camarade",
+      "text": [
+        "Hey! Welcome to Sneaky Goof!"
+      ]
+    },
+    {
+      "speaker": "Camarade",
+      "text": [
+        "In this game, you'll need to sneak around without being seen. But first, learn how to move your legs. There's one button for each leg.",
+        "Press the left button to move your left leg. Press the right button to move your right leg.",
+        "Lets try moving your legs now!"
+      ],
+      "waitForAction": 1
+    },
+    {
+      "speaker": "Camarade",
+      "text": [
+        "Well done! Now, you may have noticed that the more you press the button, the more the leg moves forward!",
+        "If the leg goes to the maximum forward position, it goes back to its original position."
+      ]
+    },
+    {
+      "speaker": "Camarade",
+      "text": [
+        "Also, when you press a button while the opposite button is hold, the leg moves back to its original position.",
+        "You need to coordinate both legs to move smoothly."
+      ]
+    },
+    {
+      "speaker": "Camarade",
+      "text": [
+        "Let's see how well you can move your legs together. Try to walk to the end of this path in 10 seconds!",
+        "The timer starts on your first move!"
+      ],
+      "waitForAction": 1
+    }
+  ]
+}

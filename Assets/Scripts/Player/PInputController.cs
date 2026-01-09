@@ -8,6 +8,7 @@ public class PInputController : MonoBehaviour
 
     private void InputsStart(PlayerController.Foot foot, bool isForward)
     {
+        DialogueActionController.Instance.actionApplied?.Invoke(isForward ? WaitingActionType.MoveForward : WaitingActionType.MoveBackward);
         playerController.InputsStart(foot, isForward);
     }
     private void InputsCancel(PlayerController.Foot foot, bool isForward)
@@ -29,6 +30,13 @@ public class PInputController : MonoBehaviour
         input.Player.KeyboardModifier.canceled += ctx => playerController.SetKeyboardModifier(false);
 
         input.Player.Pause.started += ctx => GameManager.singleton.OnPause();
+    
+
+        input.Player.PassDialogue.started += ctx => {
+            if (DialogueActionController.Instance.actionWaitingFor != WaitingActionType.None)
+                return;
+            DialogueController.Instance.NextLine();
+        };
 
         // Gauche
         input.Player.LeftStep.started += ctx =>
