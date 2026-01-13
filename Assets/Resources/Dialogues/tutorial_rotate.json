@@ -1,0 +1,27 @@
+{
+  "dialogueId": "tutorial_rotate",
+  "lines": [
+    {
+      "speaker": "Camarade",
+      "text": [
+        "Bravo! First step complete!",
+        "Now, let's learn how to rotate."
+      ]
+    },
+    {
+      "speaker": "Camarade",
+      "text": [
+        "Use your left joystick or WASD keys to rotate.",
+        "You cannot turn when your feet are on ground. You need to move one leg to turn around the other foot.",
+        "Give it a try now!"
+      ],
+      "waitForAction": 3
+    },
+    {
+      "speaker": "Camarade",
+      "text": [
+        "Fine! Keep going!"
+      ]
+    }
+  ]
+}

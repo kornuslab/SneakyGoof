@@ -26,7 +26,8 @@ public class CameraMovement : MonoBehaviour
         input.Player.CameraMove.performed += ctx => 
         {
             inputVector = ctx.ReadValue<Vector2>();
-            DialogueActionController.Instance.actionApplied?.Invoke(WaitingActionType.CameraMove);
+            if (DialogueActionController.Instance != null)
+                DialogueActionController.Instance.actionApplied?.Invoke(WaitingActionType.CameraMove);
         };
         input.Player.CameraMove.canceled += ctx => inputVector = Vector2.zero;
         input.Player.CameraMode.performed += ctx => eyeCameraDir = !eyeCameraDir;

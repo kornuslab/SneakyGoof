@@ -1,10 +1,13 @@
 using System;
+using System.Collections.Generic;
+using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 
 public class DialogueActionController : MonoBehaviour
 {
     public static DialogueActionController Instance { get; private set; }
     public WaitingActionType actionWaitingFor = WaitingActionType.None;
+    [SerializeField] private List<Sprite> commandImages;
     public Action<WaitingActionType> actionApplied;
 
     private void Start()
@@ -34,11 +37,7 @@ public class DialogueActionController : MonoBehaviour
 
     private void OnActionApplied(WaitingActionType actionType)
     {
-        if (actionType == actionWaitingFor)
-        {
-            actionWaitingFor = WaitingActionType.None;
-            DialogueController.Instance.NextLine();
-        }
+        DialogueController.Instance.NextLine(actionType);
     }
 
     private void SetWaitingAction(WaitingActionType actionType)
@@ -46,7 +45,7 @@ public class DialogueActionController : MonoBehaviour
         switch (actionType)
         {
             case WaitingActionType.None:
-                // No action required
+                actionWaitingFor = WaitingActionType.None;
                 break;
             case WaitingActionType.MoveForward:
                 actionWaitingFor = WaitingActionType.MoveForward;

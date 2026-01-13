@@ -8,12 +8,35 @@ public class PInputController : MonoBehaviour
 
     private void InputsStart(PlayerController.Foot foot, bool isForward)
     {
-        DialogueActionController.Instance.actionApplied?.Invoke(isForward ? WaitingActionType.MoveForward : WaitingActionType.MoveBackward);
+        if (DialogueActionController.Instance != null)
+            DialogueActionController.Instance.actionApplied?.Invoke(isForward ? WaitingActionType.MoveForward : WaitingActionType.MoveBackward);
         playerController.InputsStart(foot, isForward);
     }
     private void InputsCancel(PlayerController.Foot foot, bool isForward)
     {
         playerController.InputsCancel(foot, isForward);
+    }
+
+    private void Rotate(bool isLeft, bool isStart)
+    {
+        if (DialogueActionController.Instance != null && isStart)
+            DialogueActionController.Instance.actionApplied?.Invoke(WaitingActionType.Rotate);
+
+        if (isLeft)
+        {
+            if (isStart)
+                playerController.SetLRI(true);
+            else
+                playerController.SetLRI(false);
+        }
+        else
+        {
+            if (isStart)
+                playerController.SetRRI(true);
+            else
+                playerController.SetRRI(false);
+        }
+        
     }
 
     private void Awake()
@@ -33,9 +56,8 @@ public class PInputController : MonoBehaviour
     
 
         input.Player.PassDialogue.started += ctx => {
-            if (DialogueActionController.Instance.actionWaitingFor != WaitingActionType.None)
-                return;
-            DialogueController.Instance.NextLine();
+            if (DialogueActionController.Instance != null)
+                DialogueController.Instance.NextLine();
         };
 
         // Gauche
@@ -102,10 +124,11 @@ public class PInputController : MonoBehaviour
             InputsCancel(PlayerController.Foot.Right, false);
         };
 
-        input.Player.Right.started += ctx => playerController.SetRRI(true);
-        input.Player.Right.canceled += ctx =>  playerController.SetRRI(false); 
-        input.Player.Left.started += ctx => playerController.SetLRI(true);
-        input.Player.Left.canceled += ctx => playerController.SetLRI(false);
+
+        input.Player.Right.started += ctx => Rotate(false, true);
+        input.Player.Right.canceled += ctx => Rotate(false, false);
+        input.Player.Left.started += ctx => Rotate(true, true);
+        input.Player.Left.canceled += ctx => Rotate(true, false);
     }
 
     void OnDisable()

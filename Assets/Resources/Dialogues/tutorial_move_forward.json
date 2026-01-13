@@ -33,10 +33,8 @@
     {
       "speaker": "Camarade",
       "text": [
-        "Let's see how well you can move your legs together. Try to walk to the end of this path in 10 seconds!",
-        "The timer starts on your first move!"
-      ],
-      "waitForAction": 1
+        "Let's walk to the end of this path!"
+      ]
     }
   ]
 }

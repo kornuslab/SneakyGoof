@@ -6,10 +6,15 @@ public class LegTriggered : MonoBehaviour
     enum BodyPart { Left, Right, Debug };
     [SerializeField] private BodyPart bodyPart;
     [SerializeField] private PlayerController playerController;
+    private LayerMask obstacleMask;
+    private void Start()
+    {
+        obstacleMask = playerController.obstacleMask;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (!IsLayerInMask(other.gameObject.layer, obstacleMask))
         {
             return;
         }
@@ -30,7 +35,7 @@ public class LegTriggered : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (!IsLayerInMask(other.gameObject.layer, obstacleMask))
         {
             return;
         }
@@ -66,7 +71,7 @@ public class LegTriggered : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (!IsLayerInMask(other.gameObject.layer, obstacleMask))
         {
             return;
         }
@@ -78,6 +83,11 @@ public class LegTriggered : MonoBehaviour
         {
             playerController.rightFootController.legObstacleCounter -= 1;
         }
+    }
+
+    bool IsLayerInMask(int layer, LayerMask mask)
+    {
+        return (mask.value & (1 << layer)) != 0;
     }
 
 }

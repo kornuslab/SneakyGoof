@@ -8,6 +8,7 @@ public class DialogueController : MonoBehaviour
     private DialogueFile currentDialogue;
     private int currentLineIndex;
     public List<string> dialogueFileNames;
+    private int dialogueIndex = 0;
 
     private void Start()
     {
@@ -32,13 +33,28 @@ public class DialogueController : MonoBehaviour
         ShowCurrentLine();
     }
 
-    public void NextLine()
+    public void NextDialogue()
     {
+        dialogueIndex++;
+        if (dialogueIndex >= dialogueFileNames.Count)
+            return;
+        StartDialogue(dialogueFileNames[dialogueIndex]);
+    }
+
+    public void NextLine(WaitingActionType actionApplied = WaitingActionType.None)
+    {
+        if (DialogueActionController.Instance.actionWaitingFor != actionApplied)
+        {
+            return;
+        }else if (dialogueView.IsTyping())
+        {
+            dialogueView.SkipTyping();
+            return;
+        } 
         currentLineIndex++;
 
         if (currentLineIndex >= currentDialogue.lines.Length)
         {
-            dialogueView.Hide();
             return;
         }
 

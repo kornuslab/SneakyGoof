@@ -1209,11 +1209,10 @@ MonoBehaviour:
   maxStepSpeed: 5
   minStepSpeed: 0.3
   rotationSpeed: 180
-  YBodyMoveFactor: 0.5
   bodyLerpBtwLegs: 0.2
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 87
+    m_Bits: 65
   groundMask:
     serializedVersion: 2
     m_Bits: 128
@@ -1235,6 +1234,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseNoiseLevel: 2
+  stepSoundData: {fileID: 0}
 --- !u!136 &179602000745048268
 CapsuleCollider:
   m_ObjectHideFlags: 0
