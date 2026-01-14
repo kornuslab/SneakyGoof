@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4619119790380983980}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.21876526, y: -0, z: -0, w: 0.97577757}
+  m_LocalRotation: {x: 0.21876489, y: 0, z: 0, w: 0.9757776}
   m_LocalPosition: {x: 0, y: 5.51, z: -23.68}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -69,7 +69,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 90
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -154,7 +154,6 @@ MonoBehaviour:
   player: {fileID: 0}
   eye: {fileID: 0}
   speedLerp: 5
-  limitDist: 3
 --- !u!114 &7619177745455771475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,7 +168,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   transparence: 0.7
-  obstacleLayer:
-    serializedVersion: 2
-    m_Bits: 8
   debugLogs: 0
