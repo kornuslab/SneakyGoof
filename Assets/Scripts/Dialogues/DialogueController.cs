@@ -37,20 +37,26 @@ public class DialogueController : MonoBehaviour
     {
         dialogueIndex++;
         if (dialogueIndex >= dialogueFileNames.Count)
+        {
+            GameManager.singleton.SetGameOnTutoMode(false);
             return;
+        }
+        DialogueActionController.Instance.SetActiveCommandImages(false);
         StartDialogue(dialogueFileNames[dialogueIndex]);
     }
 
     public void NextLine(WaitingActionType actionApplied = WaitingActionType.None)
     {
-        if (DialogueActionController.Instance.actionWaitingFor != actionApplied)
-        {
-            return;
-        }else if (dialogueView.IsTyping())
+        if (dialogueView.IsTyping() && actionApplied == WaitingActionType.None)
         {
             dialogueView.SkipTyping();
             return;
         } 
+
+        if (DialogueActionController.Instance.actionWaitingFor != actionApplied)
+        {
+            return;
+        }
         currentLineIndex++;
 
         if (currentLineIndex >= currentDialogue.lines.Length)
@@ -66,8 +72,15 @@ public class DialogueController : MonoBehaviour
         var line = currentDialogue.lines[currentLineIndex];
         string fullText = string.Join("\n", line.text);
         dialogueView.Show(line.speaker, fullText);
+        if (DialogueActionController.Instance == null)
+        {
+            Debug.Log("DialogueActionController Instance is null");
+        }
         DialogueActionController.Instance.ApplyLine(line);
+    }
 
-        // tutorialContext.ApplyLine(line);
+    public void DisableCommandPanel()
+    {
+        dialogueView.ShowCommandImages(false);
     }
 }

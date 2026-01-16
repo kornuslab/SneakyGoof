@@ -8,6 +8,7 @@ public class DialogueView : MonoBehaviour
     [SerializeField] private GameObject panel;
     [SerializeField] private TMP_Text speakerNameText;
     [SerializeField] private TMP_Text dialogueText;
+    [SerializeField] private GameObject commandImagesPanel;
 
     [Header("Typing")]
     [SerializeField] private float charDelay = 0.03f;
@@ -63,5 +64,10 @@ public class DialogueView : MonoBehaviour
     public void Hide()
     {
         panel.SetActive(false);
+    }
+
+    public void ShowCommandImages(bool show)
+    {
+        commandImagesPanel.SetActive(show);
     }
 }

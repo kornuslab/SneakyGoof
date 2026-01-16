@@ -19,12 +19,15 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource musicSource;
     private void Awake()
     {
-        if (Instance != null)
+        if (Instance == null)
         {
-            Destroy(gameObject);
-            return;
+            Instance = this;
         }
-        Instance = this;
+        else if (Instance != this)
+        {
+            Debug.LogWarning("Multiple instances of AudioManager detected. Destroying duplicate.");
+            Destroy(gameObject);
+        }
     }
     public void Play(SoundData sound, SoundType type)
     {

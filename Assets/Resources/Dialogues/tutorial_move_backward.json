@@ -5,17 +5,14 @@
       "speaker": "Camarade",
       "text": [
         "Great! Now that you can rotate, let's learn how to move backward.",
-        "To move backward: ",
-        "On keyboard, press ctrl + left/right arrow keys. ",
-        "On gamepad, press the triggers instead of the buttons.",
-        "Try moving backward now!"
+        "Try the indicated buttons!"
       ],
       "waitForAction": 2
     },
     {
       "speaker": "Camarade",
       "text": [
-        "Well done! You've mastered rotating and moving backward.",
+        "Well done! You've mastered moving backward.",
         "Let's pass to the next lesson!"
       ]
     }

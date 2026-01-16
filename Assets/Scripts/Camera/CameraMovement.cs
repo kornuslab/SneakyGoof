@@ -18,7 +18,8 @@ public class CameraMovement : MonoBehaviour
     private Vector2 inputVector;
     private Vector3 inputDir;
     private float deadzone = 0.2f;
-    private bool eyeCameraDir = true;
+    private bool eyeCameraDir = false;
+    private bool cameraControlEnabled = true;
 
     void Start()
     {
@@ -30,7 +31,12 @@ public class CameraMovement : MonoBehaviour
                 DialogueActionController.Instance.actionApplied?.Invoke(WaitingActionType.CameraMove);
         };
         input.Player.CameraMove.canceled += ctx => inputVector = Vector2.zero;
-        input.Player.CameraMode.performed += ctx => eyeCameraDir = !eyeCameraDir;
+        input.Player.CameraMode.performed += ctx => 
+        {
+            if (cameraControlEnabled) eyeCameraDir = !eyeCameraDir;
+            if (DialogueActionController.Instance != null)
+                DialogueActionController.Instance.actionApplied?.Invoke(WaitingActionType.ChangeCameraMode);
+        };
         offset = transform.position - player.position;
         distanceBehindPlayer = offset.magnitude;
     }
@@ -112,6 +118,15 @@ public class CameraMovement : MonoBehaviour
         {
             transform.position = Vector3.Lerp(transform.position, _targetPosition, Time.deltaTime * speedLerp);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * speedLerp);
+        }
+    }
+
+    public void EnableCameraMode(bool enable = true)
+    {
+        cameraControlEnabled = enable;
+        if (!enable)
+        {
+            eyeCameraDir = false;
         }
     }
 }

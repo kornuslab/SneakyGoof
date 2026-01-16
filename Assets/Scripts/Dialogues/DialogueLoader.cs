@@ -10,22 +10,14 @@ public class DialogueFile
 [System.Serializable]
 public class DialogueLine
 {
-    public string speaker;
-    public string[] text;
-
-    public InputHint[] showInputs;
+    public string speaker = "";
+    public string[] text = new string[0];
 
     public WaitingActionType waitForAction;
-
+    public DialogueAction dialogueAction = DialogueAction.None;
     public string triggerEventId;
 }
 
-[System.Serializable]
-public class InputHint
-{
-    public string input;
-    public string action;
-}
 [System.Serializable]
 public enum WaitingActionType
 {
@@ -35,6 +27,15 @@ public enum WaitingActionType
     Rotate,
     CameraMove,
     ChangeCameraMode
+}
+
+[System.Serializable]
+public enum DialogueAction
+{
+    None,
+    EnableCameraMode,
+    Show_Noise,
+    FinishTutorial
 }
 
 public static class DialogueLoader

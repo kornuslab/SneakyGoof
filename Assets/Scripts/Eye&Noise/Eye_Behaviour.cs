@@ -46,9 +46,11 @@ public class Eye_Behaviour : MonoBehaviour
     [SerializeField] private Color firstStageColor;
     [SerializeField] private Color secondStageColor;
     [SerializeField] private Color thirdStageColor;
+    private bool noiseEnabled = true;
     [Header("SoundDatas")]
     [SerializeField] private SoundData eyeSoundData;
     [SerializeField] private SoundData noiseThreshData;
+
     void OnNoiseHeard(Vector3 sourcePosition, float intensity)
     {
         currentNoiseSpeedDecrease = noiseSpeedDecrease;
@@ -80,6 +82,7 @@ public class Eye_Behaviour : MonoBehaviour
         else if (thirdStage) // Frame when the player makes noise being on third stage
         {
             PlayerLose();
+            Debug.Log("You lose because you made too much noise!");
         }
         noiseBarSlider.value = current_noiseLevel;
     }
@@ -96,13 +99,8 @@ public class Eye_Behaviour : MonoBehaviour
             current_noiseLevel = 0;
         }
         EyeCloseAndOpenBehaviour();
-        if (current_noiseLevel > 0)
-        {
-            current_noiseLevel -= currentNoiseSpeedDecrease * Time.deltaTime;
-        }
-        currentNoiseSpeedDecrease += noiseSpeedDecreaseAcceleration * Time.deltaTime;
-        noiseBarSlider.value = current_noiseLevel;
-        NoiseColorBarUpdate();
+        
+        NoiseUpdate();
 
         if (secondStage || (firstStage && eyeOpened))
         {
@@ -126,7 +124,7 @@ public class Eye_Behaviour : MonoBehaviour
                 Debug.DrawRay(transform.position + directionToPlayer, directionToPlayer * hit.distance, Color.blue);
                 if (hit.transform.CompareTag("Player")) // If the raycast hits the player
                 {
-                    Debug.Log("au bonne endroit");
+                    Debug.Log("You lose! The eye has detected you with his light.");
                     PlayerLose();
                 }
             }
@@ -232,8 +230,32 @@ public class Eye_Behaviour : MonoBehaviour
         timerEyeClosed = UnityEngine.Random.Range(eyeClosedDurationRange.x, eyeClosedDurationRange.y);
         eyeOpenVisual.SetActive(false);
     }
+    public void EnableNoise(bool enable = true)
+    {
+        noiseEnabled = enable;
+    }
+
+    private void NoiseUpdate()
+    {
+        if(!noiseEnabled){
+            if (noiseBarSlider.gameObject.activeSelf == true)
+                noiseBarSlider.gameObject.SetActive(false);
+            return;
+        }
+
+        if (noiseBarSlider.gameObject.activeSelf == false)
+            noiseBarSlider.gameObject.SetActive(true);
+            
+        if (current_noiseLevel > 0)
+        {
+            current_noiseLevel -= currentNoiseSpeedDecrease * Time.deltaTime;
+        }
+        currentNoiseSpeedDecrease += noiseSpeedDecreaseAcceleration * Time.deltaTime;
+        noiseBarSlider.value = current_noiseLevel;
+        NoiseColorBarUpdate();
+    }
     
-        private void NoiseColorBarUpdate()
+    private void NoiseColorBarUpdate()
     {
         if (current_noiseLevel < noiseFirstThreshold)
         {

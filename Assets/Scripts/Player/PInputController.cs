@@ -1,5 +1,8 @@
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.DualShock;
+using UnityEngine.InputSystem.Utilities;
+using UnityEngine.InputSystem.XInput;
 
 public class PInputController : MonoBehaviour
 {
@@ -44,9 +47,12 @@ public class PInputController : MonoBehaviour
         input = new PlayerInputActions();
     }
 
+
     void OnEnable()
     {
         input.Player.Enable();
+
+        if (DialogueActionController.Instance != null) InputSystem.onAnyButtonPress.Call(OnAnyButtonPress);
 
         // Keyboard modifier
         input.Player.KeyboardModifier.started += ctx => playerController.SetKeyboardModifier(true);
@@ -134,6 +140,32 @@ public class PInputController : MonoBehaviour
     void OnDisable()
     {
         input.Player.Disable();
+    }
+
+    private void OnAnyButtonPress(InputControl control)
+    {
+        Controller controller = GameManager.singleton.currentController;
+        switch (control.device)
+        {
+            case Keyboard:
+                GameManager.singleton.currentController = Controller.Keyboard;
+                break;
+            case Mouse:
+                GameManager.singleton.currentController = Controller.Keyboard;
+                break;
+            case DualShockGamepad:
+                GameManager.singleton.currentController = Controller.Playstation;
+                break;
+            case XInputController:
+                GameManager.singleton.currentController = Controller.Xbox;
+                break;
+        }
+
+        if (controller != GameManager.singleton.currentController)
+        {
+            DialogueActionController.Instance.ChangePassButton();
+        }
+
     }
 
 }
